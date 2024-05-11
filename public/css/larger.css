@@ -1,0 +1,70 @@
+@media screen and (min-width: 900px){
+
+      #tools a{
+        font-size: 3ch;
+      }
+      
+      #hero{
+        display: flex;
+        position: relative;
+        justify-content: center;
+      }
+      
+      #hero img{
+        position: absolute;
+        width:600px;
+        z-index: -1;
+        margin-right: 100px;
+      }
+
+      #bottom-content{
+        margin-top: 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      #hero div{
+        margin-right: 600px;
+      }
+      
+      #hero button{
+        width:130px;
+        height:40px;
+        font-size: 2ch;
+      
+      }
+      
+      
+      #hero h2{
+        font-size:150%;
+        width: 100%;
+      }
+      
+      #hero p{
+        font-size: 150%;
+        margin-bottom: 5px;
+      }
+      
+      #welcome{
+        font-size: 4ch;
+      }
+      
+      #reviews h2, #upgrades h2{
+        font-size: 3ch;
+        text-align: center;
+      }
+      
+      #reviews ul li{
+        font-size: 3ch;
+        margin-top: 10px;
+      }
+      
+    #upgrade-images{
+        grid-gap: 10px;
+    }
+      
+      .container{
+        width: 200px;
+      }
+      
+}
