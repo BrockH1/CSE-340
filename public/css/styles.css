@@ -43,6 +43,7 @@ body{
 }
 
 #menu li{
+  text-decoration: none;
   display: flex;
 	flex-direction: row;
   width: 100%;
@@ -50,7 +51,11 @@ body{
   list-style: none;
   text-align: center;
   align-self: center;
+}
 
+#menu li:hover{
+  color:blueviolet;
+  background-color:brown;
 }
 
 .siteName a{
