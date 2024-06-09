@@ -1,7 +1,22 @@
 @media screen and (min-width: 900px){
 
+      body{
+        margin-left: 250px;
+        margin-top: 50px;
+      }
+
       #tools a{
         font-size: 3ch;
+      }
+
+      #menu{
+        width: 100%;
+        justify-content: center;
+        justify-items: center;
+      }
+
+      #menu li{
+        margin: 5%;
       }
       
       #hero{
@@ -13,7 +28,6 @@
       #hero img{
         position: absolute;
         width:600px;
-        z-index: -1;
         margin-right: 100px;
       }
 
@@ -67,4 +81,35 @@
         width: 200px;
       }
       
+      #inv-display{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        height: 100%;
+      }
+
+      #inv-display li{
+        margin-bottom: 200px;
+        border: 2px solid rgb(0, 0, 0);
+        border-radius: 10px;
+      }
+
+      #detail-display{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      #detail-img{
+        grid-column: 0/1;
+        grid-row: 1/6;
+        margin-left: 20px;
+        width: 80%;
+      }
+
+      #detail-display div{
+        grid-column: 2/3;
+      }
+
+      #detail-display h3{
+        grid-column: 2/3;
+      }
 }

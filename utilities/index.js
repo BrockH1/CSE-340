@@ -35,7 +35,7 @@ Util.buildClassificationGrid = async function(data){
         grid += '<li>'
         grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
         + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-        + 'details"><img src="' + vehicle.inv_thumbnail 
+        + 'details"><img id="inv-image" src="' + vehicle.inv_thumbnail 
         +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
         +' on CSE Motors" /></a>'
         grid += '<div class="namePrice">'
@@ -56,6 +56,29 @@ Util.buildClassificationGrid = async function(data){
     }
     return grid
   }
+
+  /* **************************************
+* Build the datail page
+* ************************************ */
+Util.buildDetailPage = async function(data){
+  let page
+  if(data != null){ 
+    page = '<div id="detail-display">'
+    page += '<img id="detail-img" src="' + data.inv_image + ' "alt="Image of '+ data.inv_make + ' ' + data.inv_model 
+        +' on CSE Motors" />'
+    page += '<h2>' + data.inv_make + ' ' + data.inv_model + ' Details'
+    page += '<h3>Price: $' + data.inv_price + '</h3>'
+    page += '<div><h3>Description: </h3><p id="detail-description">' + data.inv_description + '</p></div>'
+    page += '<div><h3>Color: </h3><p>' + data.inv_color + '</p></div>' 
+    page += '<div><h3>Miles: </h3><p id="miles">' + data.inv_miles + '</p></div>'
+    page += '</div>'
+  } else { 
+    page += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return page
+}
+
+
 
 
   /* ****************************************
