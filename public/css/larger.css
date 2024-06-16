@@ -112,4 +112,8 @@
       #detail-display h3{
         grid-column: 2/3;
       }
+
+      .form-container{
+        margin-left: 450px;
+      }
 }
