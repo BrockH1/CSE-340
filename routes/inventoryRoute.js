@@ -8,4 +8,20 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByInventoryId));
 
-module.exports = router;
+router.get("/", utilities.handleErrors(invController.buildManagementView));
+
+router.get("/add-classification", utilities.handleErrors(invController.buildClassificationForm));
+
+router.get("/add-inventory", utilities.handleErrors(invController.buildInventoryForm));
+
+router.post(
+    "/add-classification",
+    utilities.handleErrors(invController.addClassification)
+  )
+
+  router.post(
+    "/add-inventory",
+    utilities.handleErrors(invController.addInventory)
+  )
+
+  module.exports = router;

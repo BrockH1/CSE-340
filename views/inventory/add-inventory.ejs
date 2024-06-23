@@ -1,0 +1,44 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+    <% } else {
+      res.redirect('/')
+    } %>
+
+    
+    <%- messages() %>
+
+    <% if (errors) { %>
+      <ul class="notice">
+     <% errors.array().forEach(error => { %>
+       <li><%= error.msg %></li>
+    <%  }) %>
+     </ul>
+    <% } %>
+  
+    <div class="form-container">
+      <form action="/inv/add-inventory" method="POST">
+      <label for="classification_id">Classification:</label>
+      
+      <%- dropdown %>
+    
+      <label for="inv_make">Make:</label>
+      <input type="text" id="inv_make" name="inv_make" placeholder="Min of 3 characters" required minlength="3">
+      <label for="inv_model">Model:</label>
+      <input type="text" id="inv_model" name="inv_model" placeholder="Min of 3 characters" required minlength="3">
+      <label for="inv_description">Description:</label>
+      <input type="text" id="inv_description" name="inv_description" required>
+      <label for="inv_image">Image Path:</label>
+      <input type="text" id="inv_image" name="inv_image" required>
+      <label for="inv_thumbnail">Thumbnail Path:</label>
+      <input type="text" id="inv_thumbnail" name="inv_thumbnail" required>
+      <label for="inv_price">Price:</label>
+      <input type="text" id="inv_price" name="inv_price" placeholder="decimal or integer" required step="any">
+      <label for="inv_year">Year:</label>
+      <input type="text" id="inv_year" name="inv_year" placeholder="4-digit year" required min="1000"> 
+      <label for="inv_miles">Miles:</label>
+      <input type="text" id="inv_miles" name="inv_miles" placeholder="digits only" required step="any"> 
+      <label for="inv_color">Color:</label>
+      <input type="text" id="inv_color" name="inv_color" required>
+      <input type="submit" value="Submit">
+      </form>
+    </div>

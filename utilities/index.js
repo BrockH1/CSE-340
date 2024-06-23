@@ -78,8 +78,24 @@ Util.buildDetailPage = async function(data){
   return page
 }
 
+Util.buildInventoryForm = async function(classification_id = null){
+  let data = await invModel.getClassifications()
+  let dropdown = '<select id="inv-dropdown" name="classification_id" required>'
+  dropdown += '<option value="">Select a classification</option>'
+  data.rows.forEach((row) => {
+    dropdown += '<option value="' + row.classification_id +'"'
+    if (
+      classification_id != null &&
+      row.classification_id == classification_id
+    ){
+      dropdown += " selected "
+    }
+    dropdown += ">" + row.classification_name + "</option>"
+  })
+  dropdown += '</select>'
 
-
+  return dropdown
+}
 
   /* ****************************************
  * Middleware For Handling Errors
