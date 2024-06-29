@@ -62,4 +62,4 @@ WHERE inv_make = 'GM' and inv_model = 'Hummer'
 UPDATE 
 	inventory
 SET
-	inv_image = REPLACE(inv_image, 'images/vehichles', 'images/vehicles/'), inv_thumbnail = REPLACE(inv_thumbnail, 'images/vehichles', 'images/vehicles/')
+	inv_image = REPLACE(inv_image, 'images/', 'images/vehicles/'), inv_thumbnail = REPLACE(inv_thumbnail, 'images/', 'images/vehicles/')
