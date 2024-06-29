@@ -1,6 +1,6 @@
 
 const accountModel = require("../models/account-model")
-
+const invModel = require("../models/inventory-model")
 const utilities = require(".")
   const { body, validationResult } = require("express-validator")
   const validate = {}
@@ -75,6 +75,8 @@ const utilities = require(".")
   }
 
   validate.checkRegData = async (req, res, next) => {
+    let classifications = await invModel.getClassifications()
+    const dropdown = await utilities.buildInventoryForm(classifications)
     const { inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
     let errors = []
     errors = validationResult(req)
@@ -93,7 +95,7 @@ const utilities = require(".")
         inv_year, 
         inv_miles, 
         inv_color,
-        errors: null
+        dropdown,
       })
       return
     }
