@@ -74,9 +74,6 @@ const utilities = require(".")
     ]
   }
 
-  let classifications = await invModel.getClassifications()
-  const dropdown = await utilities.buildInventoryForm(classifications)
-
   validate.checkRegData = async (req, res, next) => {
     const { inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
     let errors = []
@@ -96,7 +93,6 @@ const utilities = require(".")
         inv_year, 
         inv_miles, 
         inv_color,
-        dropdown,
         errors: null
       })
       return

@@ -57,7 +57,7 @@ invCont.buildInventoryForm = async function (req, res, next) {
   let nav = await utilities.getNav()
   const dropdown = await utilities.buildInventoryForm()
   res.render("./inventory/add-inventory", {
-    title: "Add Classification",
+    title: "Add Inventory",
     nav,
     dropdown,
     errors: null
