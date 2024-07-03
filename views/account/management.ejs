@@ -1,0 +1,7 @@
+<%- messages() %>
+
+<% if (title) {%>
+    <h1 id="management-title"><%= title %></h1>
+    <% } else {
+        res.redirect('/')
+    } %>

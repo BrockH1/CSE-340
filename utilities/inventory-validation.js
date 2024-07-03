@@ -101,5 +101,34 @@ const utilities = require(".")
     }
     next()
   }
+
+  validate.checkUpdateData = async (req, res, next) => {
+    let classifications = await invModel.getClassifications()
+    const dropdown = await utilities.buildInventoryForm(classifications)
+    const { inv_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color } = req.body
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      let nav = await utilities.getNav()
+      res.render("inventory/edit-inventory", {
+        errors,
+        title: "Edit Inventory",
+        nav,
+        inv_id,
+        inv_make, 
+        inv_model, 
+        inv_description, 
+        inv_image, 
+        inv_thumbnail, 
+        inv_price, 
+        inv_year, 
+        inv_miles, 
+        inv_color,
+        dropdown,
+      })
+      return
+    }
+    next()
+  }
   
   module.exports = validate

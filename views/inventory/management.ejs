@@ -1,3 +1,4 @@
+
 <% if (title) { %>
     <h1><%= title %></h1>
     <% } else {
@@ -8,5 +9,10 @@
 
     <a href="/inv/add-inventory">Add inventory item</a>
 
-<%- messages() %>
-
+    <h2>Manage Inventory</h2>
+    <p>Select classification</p>
+    <%- classificationSelect %>
+    <table id="inventoryDisplay"></table>
+    <noscript>JavaScript must be enabled to use this page.</noscript>
+    <%- messages() %>
+<script src="../../js/inventory.js"></script>
