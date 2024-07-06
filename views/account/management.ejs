@@ -5,3 +5,9 @@
     <% } else {
         res.redirect('/')
     } %>
+<h2>Welcome <%= clientName %></h2>
+<a href=<%="/account/update/" + locals.accountData.account_id%>>Update account information</a>
+<% if (accountType === "Employee" || accountType === "Admin") { %>
+    <a href="/inv/">Inventory Management</a>
+
+  <% }  %>

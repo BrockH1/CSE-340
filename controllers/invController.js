@@ -14,6 +14,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const className = data[0].classification_name
   res.render("./inventory/classification", {
     title: className + " vehicles",
+    isLoggedIn: res.locals.loggedin,
     nav,
     grid,
     errors: null
@@ -27,6 +28,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
   let nav = await utilities.getNav()
   res.render("./inventory/detail", {
     title: data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model,
+    isLoggedIn: res.locals.loggedin,
     nav,
     page,
     errors: null
@@ -38,6 +40,7 @@ invCont.buildManagementView = async function (req, res, next) {
   const classificationSelect = await utilities.buildClassList()
   res.render("./inventory/management", {
     title: "Vehicle Management",
+    isLoggedIn: res.locals.loggedin,
     nav,
     classificationSelect,
     errors: null
@@ -49,6 +52,7 @@ invCont.buildClassificationForm = async function (req, res, next) {
   let nav = await utilities.getNav()
   res.render("./inventory/add-classification", {
     title: "Add Classification",
+    isLoggedIn: res.locals.loggedin,
     nav,
     errors: null
   })
@@ -60,6 +64,7 @@ invCont.buildInventoryForm = async function (req, res, next) {
   const dropdown = await utilities.buildInventoryForm()
   res.render("./inventory/add-inventory", {
     title: "Add Inventory",
+    isLoggedIn: res.locals.loggedin,
     nav,
     dropdown,
     errors: null
@@ -85,6 +90,7 @@ invCont.addClassification = async function (req, res) {
     )
     res.status(201).render("./inventory/add-classification", {
       title: "Add Classification",
+      isLoggedIn: res.locals.loggedin,
       nav,
       errors: null
     })
@@ -92,6 +98,7 @@ invCont.addClassification = async function (req, res) {
     req.flash("notice", "Sorry, the process failed.")
     res.status(501).render("./inventory/add-classification", {
       title: "Add Classification",
+      isLoggedIn: res.locals.loggedin,
       nav,
       errors: null
     })
@@ -116,6 +123,7 @@ invCont.addInventory = async function (req, res) {
     )
     res.status(201).render("./inventory/add-inventory", {
       title: "Add Inventory",
+      isLoggedIn: res.locals.loggedin,
       nav,
       dropdown,
       errors: null
@@ -124,6 +132,7 @@ invCont.addInventory = async function (req, res) {
     req.flash("notice", "Sorry, the process failed.")
     res.status(501).render("./inventory/add-inventory", {
       title: "Add Inventory",
+      isLoggedIn: res.locals.loggedin,
       nav,
       dropdown,
       errors: null
@@ -153,6 +162,7 @@ invCont.buildEditPage = async function (req, res, next) {
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   res.render("./inventory/edit-inventory", {
     title: "Edit " + itemName,
+    isLoggedIn: res.locals.loggedin,
     nav,
     classificationSelect: classificationSelect,
     errors: null,
@@ -211,6 +221,7 @@ invCont.updateInventory = async function (req, res) {
     req.flash("notice", "Sorry, the process failed.")
     res.status(501).render("./inventory/edit-inventory", {
       title: "Edit" + itemName,
+      isLoggedIn: res.locals.loggedin,
       nav,
       classificationSelect,
       errors: null,
@@ -237,6 +248,7 @@ invCont.buildDeleteView = async function (req, res, next) {
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   res.render("./inventory/delete-confirm", {
     title: "Delete " + itemName,
+    isLoggedIn: res.locals.loggedin,
     nav,
     errors: null,
     inv_make: itemData.inv_make,
@@ -275,6 +287,7 @@ invCont.deleteItem = async function (req, res) {
     req.flash("notice", "Sorry, the process failed.")
     res.status(501).render("./inventory/delete-confirm", {
       title: "Delete" + itemName,
+      isLoggedIn: res.locals.loggedin,
       nav,
       errors: null,
       inv_make,

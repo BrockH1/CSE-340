@@ -9,17 +9,17 @@ router.get("/type/:classificationId", utilities.handleErrors(invController.build
 
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByInventoryId));
 
-router.get("/", utilities.handleErrors(invController.buildManagementView));
+router.get("/", utilities.checkAccountType, utilities.handleErrors(invController.buildManagementView));
 
-router.get("/add-classification", utilities.handleErrors(invController.buildClassificationForm));
+router.get("/add-classification", utilities.checkAccountType,utilities.handleErrors(invController.buildClassificationForm));
 
-router.get("/add-inventory", utilities.handleErrors(invController.buildInventoryForm));
+router.get("/add-inventory", utilities.checkAccountType, utilities.handleErrors(invController.buildInventoryForm));
 
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
 
-router.get("/edit/:inv_id", utilities.handleErrors(invController.buildEditPage))
+router.get("/edit/:inv_id", utilities.checkAccountType, utilities.handleErrors(invController.buildEditPage))
 
-router.get("/delete/:inv_id", utilities.handleErrors(invController.buildDeleteView))
+router.get("/delete/:inv_id", utilities.checkAccountType, utilities.handleErrors(invController.buildDeleteView))
 
 router.post(
   "/delete",

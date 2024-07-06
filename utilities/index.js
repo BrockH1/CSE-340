@@ -149,10 +149,24 @@ Util.checkJWTToken = (req, res, next) => {
      next()
     })
   } else {
+    res.locals.loggedin = 0
    next()
   }
  }
 
+Util.checkAccountType = (req, res, next) => {
+  if (!res.locals.loggedin){
+    req.flash("notice", "Access denied. Insufficient permissions.");
+    return res.redirect("/account/login");
+  }
+  else if (res.locals.accountData.account_type === "Employee" || res.locals.accountData.account_type === "Admin") {
+    next();
+  }
+  else {
+    req.flash("notice", "Access denied. Insufficient permissions.");
+    return res.redirect("/account/login");
+  }
+}
   /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 
