@@ -80,6 +80,9 @@ Util.buildDetailPage = async function(data){
   return page
 }
 
+/* **************************************
+* Build the classification dropdown HTML
+* ************************************ */
 Util.buildInventoryForm = async function(classification_id = null){
   let data = await invModel.getClassifications()
   let dropdown = '<select id="inv-dropdown" name="classification_id" required>'
@@ -99,6 +102,9 @@ Util.buildInventoryForm = async function(classification_id = null){
   return dropdown
 }
 
+/* **************************************
+* Build the classification dropdown HTML
+* ************************************ */
 Util.buildClassList = async function(classification_id = null){
   let data = await invModel.getClassifications()
   let dropdown = '<select id="classificationList" name="classification_id" required>'
@@ -154,6 +160,9 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+/* **************************************
+* Check user's account type
+* ************************************ */
 Util.checkAccountType = (req, res, next) => {
   if (!res.locals.loggedin){
     req.flash("notice", "Access denied. Insufficient permissions.");

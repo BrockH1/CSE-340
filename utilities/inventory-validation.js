@@ -5,6 +5,9 @@ const utilities = require(".")
   const { body, validationResult } = require("express-validator")
   const validate = {}
 
+  /* **************************************
+* Add inventory item rules
+* ************************************ */
   validate.registationRules = () => {
     return [
       // firstname is required and must be string
@@ -74,6 +77,9 @@ const utilities = require(".")
     ]
   }
 
+  /* **************************************
+* Check inventory data
+* ************************************ */
   validate.checkRegData = async (req, res, next) => {
     let classifications = await invModel.getClassifications()
     const dropdown = await utilities.buildInventoryForm(classifications)
@@ -102,6 +108,9 @@ const utilities = require(".")
     next()
   }
 
+  /* **************************************
+* Check updated inventory data
+* ************************************ */
   validate.checkUpdateData = async (req, res, next) => {
     let classifications = await invModel.getClassifications()
     const dropdown = await utilities.buildInventoryForm(classifications)

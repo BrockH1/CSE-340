@@ -31,7 +31,9 @@ async function buildRegister(req, res, next) {
     })
   } 
 
-
+  /* ***************************
+ *  Build account management view
+ * ************************** */
   async function buildManagement(req, res, next) {
     let nav = await utilities.getNav()
     const account_id = parseInt(res.locals.accountData.account_id)
@@ -46,6 +48,9 @@ async function buildRegister(req, res, next) {
     })
   }
 
+  /* ***************************
+ *  Build update account info view
+ * ************************** */
   async function buildUpdateView(req, res, next) {
     let nav = await utilities.getNav()
     const account_id = parseInt(res.locals.accountData.account_id)
@@ -149,6 +154,9 @@ async function accountLogin(req, res) {
   }
  }
 
+ /* ***************************
+ *  Update account info
+ * ************************** */
  async function updateInfo(req, res) {
   
   let nav = await utilities.getNav()
@@ -186,6 +194,9 @@ async function accountLogin(req, res) {
   }
 }
 
+/* ***************************
+ *  Change account password
+ * ************************** */
 async function changePassword(req, res) {
   let nav = await utilities.getNav()
   let hashedPassword
@@ -234,6 +245,9 @@ async function changePassword(req, res) {
   }
 }
 
+/* ***************************
+ *  Logout process
+ * ************************** */
 async function logout(req, res)
 {
   console.log("Testing")

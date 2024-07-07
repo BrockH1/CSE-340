@@ -39,6 +39,9 @@ async function getAccountByEmail (account_email) {
   }
 }
 
+/* ***************************
+ *  Retreive account info by id
+ * ************************** */
 async function getAccountById (account_id) {
   try {
     const result = await pool.query(
@@ -50,6 +53,9 @@ async function getAccountById (account_id) {
   }
 }
 
+/* ***************************
+ *  Update account info
+ * ************************** */
 async function updateInfo (
   account_firstname,
   account_lastname,
@@ -71,6 +77,9 @@ async function updateInfo (
     }
 }
 
+/* ***************************
+ *  Change account password
+ * ************************** */
 async function changePassword (
   account_password,
   account_id

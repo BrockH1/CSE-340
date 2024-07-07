@@ -21,6 +21,9 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build inventory item page
+ * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
   const inventory_id = req.params.inventoryId
   const data = await invModel.getInventoryByInvId(inventory_id)
@@ -35,6 +38,9 @@ invCont.buildByInventoryId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build inventory management view
+ * ************************** */
 invCont.buildManagementView = async function (req, res, next) {
   let nav = await utilities.getNav()
   const classificationSelect = await utilities.buildClassList()
@@ -48,6 +54,9 @@ invCont.buildManagementView = async function (req, res, next) {
 
 }
 
+/* ***************************
+ *  Build view for adding classification
+ * ************************** */
 invCont.buildClassificationForm = async function (req, res, next) {
   let nav = await utilities.getNav()
   res.render("./inventory/add-classification", {
@@ -59,6 +68,9 @@ invCont.buildClassificationForm = async function (req, res, next) {
 
 }
 
+/* ***************************
+ *  Build inventory form
+ * ************************** */
 invCont.buildInventoryForm = async function (req, res, next) {
   let nav = await utilities.getNav()
   const dropdown = await utilities.buildInventoryForm()
@@ -105,6 +117,9 @@ invCont.addClassification = async function (req, res) {
   }
 }
 
+/* ***************************
+ *  Add new inventory item
+ * ************************** */
 invCont.addInventory = async function (req, res) {
   const {classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color} = req.body
 
@@ -153,6 +168,9 @@ invCont.getInventoryJSON = async (req, res, next) => {
   }
 }
 
+/* ***************************
+ *  Build edit page
+ * ************************** */
 invCont.buildEditPage = async function (req, res, next) {
   const inv_id = parseInt(req.params.inv_id)
   let nav = await utilities.getNav()
@@ -180,6 +198,9 @@ invCont.buildEditPage = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Update inventory
+ * ************************** */
 invCont.updateInventory = async function (req, res) {
   let nav = await utilities.getNav()
   const {
@@ -240,6 +261,9 @@ invCont.updateInventory = async function (req, res) {
   }
 }
 
+/* ***************************
+ *  Build confirmation page for deleting item
+ * ************************** */
 invCont.buildDeleteView = async function (req, res, next) {
   const inv_id = parseInt(req.params.inv_id)
   let nav = await utilities.getNav()
@@ -259,6 +283,9 @@ invCont.buildDeleteView = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Delete inventory item
+ * ************************** */
 invCont.deleteItem = async function (req, res) {
   let nav = await utilities.getNav()
   const {

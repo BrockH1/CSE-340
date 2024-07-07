@@ -54,6 +54,9 @@ const utilities = require(".")
     ]
   }
 
+  /* **************************************
+* Update account info rules
+* ************************************ */
   validate.updateRules = () => {
     return [
       body("account_firstname")
