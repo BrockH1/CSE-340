@@ -274,3 +274,36 @@ justify-self: center;
 .form-container input:hover {
   background-color: #0056b3;
 }
+
+#review-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.review-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.review-header {
+  font-weight: bold;
+  margin: 0;
+}
+
+.review-separator {
+  border: none;
+  border-top: 2px solid #333;
+  margin: 10px 0;
+}
+
+.review-text {
+  margin: 0;
+}
+
+.notice {
+  font-style: italic;
+  color: #777;
+}

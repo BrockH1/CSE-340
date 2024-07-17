@@ -38,12 +38,15 @@ async function buildRegister(req, res, next) {
     let nav = await utilities.getNav()
     const account_id = parseInt(res.locals.accountData.account_id)
     let accountData = await accountModel.getAccountById(account_id)
+    const reviewData = await accountModel.getReviewsByAccountId(account_id)
+    const reviews = await utilities.displayReviewsByAccountId(reviewData)
     res.render("./account/management", {
       title: "Manage Account",
       isLoggedIn: res.locals.loggedin,
       clientName: accountData.account_firstname,
       accountType: res.locals.accountData.account_type,
       nav,
+      reviews,
       errors: null
     })
   }
@@ -64,6 +67,73 @@ async function buildRegister(req, res, next) {
       nav,
       errors: null
     })
+  }
+
+
+
+
+
+
+  async function buildEditReviewView(req, res, next)
+  {
+    let nav = await utilities.getNav()
+    const review_id = parseInt(req.params.review_id)
+    const review_data = await accountModel.getReviewById(review_id)
+    res.render("./account/edit-review", {
+      title: "Update Review",
+      isLoggedIn: res.locals.loggedin,
+      review_date: review_data.review_date,
+      review_text: review_data.review_text,
+      review_id: review_id,
+      nav,
+      errors: null
+    })
+  }
+
+  async function buildDeleteReviewView(req, res, next)
+  {
+    let nav = await utilities.getNav()
+    const review_id = parseInt(req.params.review_id)
+    const review_data = await accountModel.getReviewById(review_id)
+    res.render("./account/delete-review", {
+      title: "Delete Review",
+      isLoggedIn: res.locals.loggedin,
+      review_date: review_data.review_date,
+      review_text: review_data.review_text,
+      review_id: review_id,
+      nav,
+      errors: null
+    })
+  }
+
+  async function deleteReview(req, res)
+  {
+    let nav = await utilities.getNav()
+
+    const {
+    review_id} = req.body
+  
+  const review_data = await accountModel.getReviewById(review_id)
+  
+    const regResult = await accountModel.deleteReview(
+      review_id
+    )
+  
+    if (regResult) {
+      req.flash("notice", `Review successfully deleted.`)
+      res.redirect("/account/")
+  
+    } else {
+      req.flash("notice", "Sorry, the process failed.")
+      res.status(501).render("./account/edit-review", {
+        title: "Update Account",
+        isLoggedIn: res.locals.loggedin,
+        nav,
+        review_date: review_data.review_date,
+        review_text: review_data.review_text,
+        errors: null
+      })
+    }
   }
 
   /* ****************************************
@@ -124,9 +194,6 @@ async function accountLogin(req, res) {
   let nav = await utilities.getNav()
   const { account_email, account_password } = req.body
   const accountData = await accountModel.getAccountByEmail(account_email)
-  console.log(accountData)
-  console.log(account_email)
-  console.log(account_password)
   if (!accountData) {
    req.flash("notice", "Please check your credentials and try again.")
    res.status(400).render("account/login", {
@@ -185,11 +252,40 @@ async function accountLogin(req, res) {
       title: "Update Account",
       isLoggedIn: res.locals.loggedin,
       nav,
-      classificationSelect,
       errors: null,
       firstname: accountData.account_firstname,
       lastname: accountData.account_lastname,
       email: accountData.account_email,
+    })
+  }
+}
+
+async function updateReview(req, res) {
+  let nav = await utilities.getNav()
+
+  const {
+  review_text,
+review_id} = req.body
+
+const review_data = await accountModel.getReviewById(review_id)
+
+  const regResult = await accountModel.updateReview(
+    review_text, review_id
+  )
+
+  if (regResult) {
+    req.flash("notice", `Review successfully updated.`)
+    res.redirect("/account/")
+
+  } else {
+    req.flash("notice", "Sorry, the process failed.")
+    res.status(501).render("./account/edit-review", {
+      title: "Update Account",
+      isLoggedIn: res.locals.loggedin,
+      nav,
+      review_date: review_data.review_date,
+      review_text: review_data.review_text,
+      errors: null
     })
   }
 }
@@ -256,4 +352,4 @@ async function logout(req, res)
   res.locals.loggedin = 0
 }
   
-  module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildUpdateView, updateInfo, changePassword, logout }
+  module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildManagement, buildUpdateView, updateInfo, changePassword, logout, buildEditReviewView, updateReview, buildDeleteReviewView, deleteReview}

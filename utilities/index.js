@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const accountModel = require("../models/account-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -124,6 +125,57 @@ Util.buildClassList = async function(classification_id = null){
   return dropdown
 }
 
+/* **************************************
+*  Display reviews on inventory detail page.
+* ************************************ */
+Util.displayReviewsByInvId = async function(data){
+  if(data.length > 0){
+    reviews = '<ul id="review-list">'
+    data.forEach(review => { 
+      reviews += '<li class="review-item">'
+      reviews += "<p class='review-header'>" + review.review_name + " wrote on " + review.review_date
+      reviews += "<hr class='review-separator'>";
+      reviews += "<p class='review-text'>" + review.review_text
+      reviews += '</li>'
+    })
+    reviews += '</ul>'
+  } else { 
+    reviews = '<p class="notice">Be the first person to write a review you filthy animal... and a happy new year.</p>'
+  }
+  return reviews
+}
+
+async function processReviews(reviews, id) {
+
+  for (const review of reviews) {
+
+    await invModel.getInventoryByInvId(id);
+
+  }
+
+}
+
+Util.displayReviewsByAccountId = async function(data){
+  if(data.length > 0){
+    reviews = '<ul id="review-list">'
+    let count = 0
+    data.forEach(review=> { 
+      count++
+      invData = invModel.getInventoryByInvId(data.inv_id)
+      reviews += '<li>'
+      reviews += "<p>" + count + ". Reviewed the " + invData.inv_year + " " 
+      + invData.inv_make + " " + invData.inv_model + " on " + review.review_date + " | " 
+      + "<a href = '/account/review/edit/" 
+      + review.review_id + "'> Edit </a> | <a href = '/account/review/delete/" 
+      + review.review_id + "' > Delete</a>"
+      reviews += '</li>'
+    })
+    reviews += '</ul>'
+  } else { 
+    reviews = '<p class="notice">You have yet to write a review.</p>'
+  }
+  return reviews
+}
 /* ****************************************
  *  Check Login
  * ************************************ */

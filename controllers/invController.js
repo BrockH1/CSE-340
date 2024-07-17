@@ -25,15 +25,19 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build inventory item page
  * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
-  const inventory_id = req.params.inventoryId
-  const data = await invModel.getInventoryByInvId(inventory_id)
+  const inv_id = req.params.inventoryId
+  const data = await invModel.getInventoryByInvId(inv_id)
   const page = await utilities.buildDetailPage(data)
+  const reviewData = await invModel.getReviewDataByInvId(inv_id)
+  const reviews = await utilities.displayReviewsByInvId(reviewData)
   let nav = await utilities.getNav()
   res.render("./inventory/detail", {
     title: data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model,
     isLoggedIn: res.locals.loggedin,
     nav,
     page,
+    reviews,
+    inv_id: inv_id,
     errors: null
   })
 }
@@ -148,11 +152,49 @@ invCont.addInventory = async function (req, res) {
     res.status(501).render("./inventory/add-inventory", {
       title: "Add Inventory",
       isLoggedIn: res.locals.loggedin,
+      
       nav,
       dropdown,
       errors: null
     })
   }
+}
+
+/* ***************************
+ *  Add review
+ * ************************** */
+invCont.addReview = async function (req, res) {
+  const {review_text, inv_id, review_name} = req.body
+  const account_id = res.locals.accountData.account_id
+
+  const regResult = await invModel.addReview(
+    review_text, inv_id, account_id, review_name
+  )
+
+  if (regResult) {
+    const redirectRoute = "/inv/detail/" + inv_id
+    req.flash(
+      "notice",
+      `Review has been added`
+    )
+  res.redirect(redirectRoute)
+  } else {
+    let nav = await utilities.getNav()
+    const data = await invModel.getInventoryByInvId(inv_id)
+    const page = await utilities.buildDetailPage(data)
+    const reviewData = await invModel.getReviewDataByInvId(inv_id)
+    const reviews = await utilities.displayReviewsByInvId(reviewData)
+    req.flash("notice", "Sorry, the process failed.")
+    res.status(501).render("./inventory/detail", {
+      title: data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model,
+      isLoggedIn: res.locals.loggedin,
+      nav,
+      page,
+      reviews,
+      errors: null
+    })
+  }
+
 }
 
 /* ***************************

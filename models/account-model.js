@@ -53,6 +53,27 @@ async function getAccountById (account_id) {
   }
 }
 
+async function getReviewsByAccountId (account_id) {
+  try{
+    const result = await pool.query(
+      'SELECT * FROM review WHERE account_id = $1',
+      [account_id])
+    return result.rows
+  } catch (error) {
+    return new Error("No matching id found")
+  }
+}
+
+async function getReviewById (review_id) {
+  try{
+    const result = await pool.query(
+      'SELECT * FROM review WHERE review_id = $1',
+      [review_id])
+      return result.rows[0]
+  } catch (error) {
+    return new Error("No matching id found")
+  }
+}
 /* ***************************
  *  Update account info
  * ************************** */
@@ -77,6 +98,37 @@ async function updateInfo (
     }
 }
 
+async function updateReview (
+  review_text,
+  review_id
+)
+{
+  try{
+  const sql = "UPDATE public.review SET review_text = $1 WHERE review_id = $2 RETURNING *"
+  const data = await pool.query(sql, [
+    review_text,
+    review_id
+  ])
+  return data.rows[0]
+} catch (error) {
+  return error.message
+}
+}
+
+async function deleteReview(
+  review_id
+)
+{
+try{
+  const sql = "DELETE FROM review WHERE review_id = $1";
+      const data = await pool.query(sql, [
+        review_id])
+        return data
+    } catch (error) {
+      return error.message
+    }
+}
+
 /* ***************************
  *  Change account password
  * ************************** */
@@ -96,4 +148,4 @@ async function changePassword (
       return error.message
     }
 }
-  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateInfo, getAccountById, changePassword}
+  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateInfo, getAccountById, changePassword, getReviewsByAccountId, getReviewById, updateReview, deleteReview}

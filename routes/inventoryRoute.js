@@ -54,5 +54,9 @@ router.post(
     regValidate.registationRules(),
     regValidate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory))
+  
+  router.post("/review",
+    utilities.handleErrors(invController.addReview)
+  )
 
   module.exports = router;
