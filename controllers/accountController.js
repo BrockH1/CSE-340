@@ -78,6 +78,7 @@ async function buildRegister(req, res, next) {
   {
     let nav = await utilities.getNav()
     const review_id = parseInt(req.params.review_id)
+    console.log(req.params)
     const review_data = await accountModel.getReviewById(review_id)
     res.render("./account/edit-review", {
       title: "Update Review",

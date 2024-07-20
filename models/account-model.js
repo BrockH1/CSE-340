@@ -56,7 +56,7 @@ async function getAccountById (account_id) {
 async function getReviewsByAccountId (account_id) {
   try{
     const result = await pool.query(
-      'SELECT review.review_text, review.review_date, inventory.inv_make, inventory.inv_model, inventory.inv_year FROM review INNER JOIN inventory on review.inv_id = inventory.inv_id WHERE account_id = $1',
+      'SELECT review.review_text, review.review_date, inventory.inv_make, inventory.inv_model, inventory.inv_year, review.review_id FROM review INNER JOIN inventory on review.inv_id = inventory.inv_id WHERE account_id = $1',
       [account_id])
     console.log(result.rows)
     return result.rows

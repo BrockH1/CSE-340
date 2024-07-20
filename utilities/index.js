@@ -157,6 +157,7 @@ async function processReviews(reviews, id) {
 
 Util.displayReviewsByAccountId = async function(data){
   if(data.length > 0){
+    console.log(data)
     reviews = '<ul id="review-list">'
     let count = 0
     data.forEach(review=> { 
