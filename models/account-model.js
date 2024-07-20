@@ -56,8 +56,9 @@ async function getAccountById (account_id) {
 async function getReviewsByAccountId (account_id) {
   try{
     const result = await pool.query(
-      'SELECT * FROM review WHERE account_id = $1',
+      'SELECT review.review_text, review.review_date, inventory.inv_make, inventory.inv_model, inventory.inv_year FROM review INNER JOIN inventory on review.inv_id = inventory.inv_id WHERE account_id = $1',
       [account_id])
+    console.log(result.rows)
     return result.rows
   } catch (error) {
     return new Error("No matching id found")
@@ -74,6 +75,18 @@ async function getReviewById (review_id) {
     return new Error("No matching id found")
   }
 }
+
+async function getReviewName (account_id) {
+  try{
+    const result = await pool.query(
+      'SELECT UPPER(SUBSTRING(account_firstname, 1, 1)) as first_initial, account_lastname FROM account WHERE account_id = $1',
+      [account_id])
+      return result.rows[0]
+  } catch (error) {
+    return new Error("No matching id found")
+  }
+}
+
 /* ***************************
  *  Update account info
  * ************************** */
@@ -148,4 +161,4 @@ async function changePassword (
       return error.message
     }
 }
-  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateInfo, getAccountById, changePassword, getReviewsByAccountId, getReviewById, updateReview, deleteReview}
+  module.exports = {registerAccount, checkExistingEmail, getAccountByEmail, updateInfo, getAccountById, changePassword, getReviewsByAccountId, getReviewById, updateReview, deleteReview, getReviewName}

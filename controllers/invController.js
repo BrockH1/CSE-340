@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model")
 const utilities = require("../utilities/")
+const accountModel = require("../models/account-model")
 
 const invCont = {}
 
@@ -30,16 +31,39 @@ invCont.buildByInventoryId = async function (req, res, next) {
   const page = await utilities.buildDetailPage(data)
   const reviewData = await invModel.getReviewDataByInvId(inv_id)
   const reviews = await utilities.displayReviewsByInvId(reviewData)
+  if (res.locals.loggedin)
+    {
+      const account_id = res.locals.accountData.account_id
+      const accountName = await accountModel.getReviewName(account_id)
+      const reviewName = accountName.first_initial + accountName.account_lastname
+
   let nav = await utilities.getNav()
+  console.log(reviewData)
   res.render("./inventory/detail", {
     title: data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model,
     isLoggedIn: res.locals.loggedin,
     nav,
     page,
     reviews,
+    reviewName,
     inv_id: inv_id,
     errors: null
   })
+}
+else{
+  let nav = await utilities.getNav()
+  console.log(reviewData)
+  res.render("./inventory/detail", {
+    title: data.inv_year + ' ' + data.inv_make + ' ' + data.inv_model,
+    isLoggedIn: res.locals.loggedin,
+    nav,
+    page,
+    reviews,
+    reviewName: "",
+    inv_id: inv_id,
+    errors: null
+  })
+}
 }
 
 /* ***************************
@@ -152,7 +176,7 @@ invCont.addInventory = async function (req, res) {
     res.status(501).render("./inventory/add-inventory", {
       title: "Add Inventory",
       isLoggedIn: res.locals.loggedin,
-      
+
       nav,
       dropdown,
       errors: null
@@ -164,11 +188,11 @@ invCont.addInventory = async function (req, res) {
  *  Add review
  * ************************** */
 invCont.addReview = async function (req, res) {
-  const {review_text, inv_id, review_name} = req.body
+  const {review_text, inv_id} = req.body
   const account_id = res.locals.accountData.account_id
 
   const regResult = await invModel.addReview(
-    review_text, inv_id, account_id, review_name
+    review_text, inv_id, account_id
   )
 
   if (regResult) {

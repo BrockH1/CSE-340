@@ -19,9 +19,9 @@ router.get("/update/:account_id", utilities.handleErrors(accountController.build
 // Route to handle logout process
 router.get("/logout", utilities.handleErrors(accountController.logout))
 
-router.get("/review/delete/:review_id", utilities.handleErrors(accountController.buildDeleteReviewView))
+router.get("/review/delete/:review_id", utilities.checkLogin, utilities.handleErrors(accountController.buildDeleteReviewView))
 
-router.get("/review/edit/:review_id", utilities.handleErrors(accountController.buildEditReviewView))
+router.get("/review/edit/:review_id", utilities.checkLogin, utilities.handleErrors(accountController.buildEditReviewView))
 
 // Route to handle register acount process
 router.post(
@@ -51,11 +51,13 @@ router.post(
 
 router.post(
   "/review/update/",
+  utilities.checkLogin,
   utilities.handleErrors(accountController.updateReview)
 )
 
 router.post(
   "/review/delete/",
+  utilities.checkLogin,
   utilities.handleErrors(accountController.deleteReview)
 )
 

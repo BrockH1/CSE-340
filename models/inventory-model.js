@@ -45,7 +45,7 @@ async function getInventoryByInvId(inv_id){
   async function getReviewDataByInvId(inv_id){
     try {
       const data = await pool.query(
-        'SELECT * FROM public.review WHERE inv_id = $1',
+        'SELECT review_text, review_date, UPPER(SUBSTRING(account_firstname, 1, 1)) as first_initial, account_lastname FROM review INNER JOIN account on review.account_id = account.account_id  WHERE inv_id = $1',
         [inv_id]
       )
       return data.rows
@@ -128,11 +128,11 @@ async function getInventoryByInvId(inv_id){
     }
   }
 
-  async function addReview(review_text, inv_id, account_id, review_name)
+  async function addReview(review_text, inv_id, account_id)
   {
     try{
-      const sql = "INSERT INTO review (review_text, inv_id, account_id, review_name) VALUES ($1, $2, $3, $4) RETURNING *"
-      return await pool.query(sql, [review_text, inv_id, account_id, review_name])
+      const sql = "INSERT INTO review (review_text, inv_id, account_id) VALUES ($1, $2, $3) RETURNING *"
+      return await pool.query(sql, [review_text, inv_id, account_id])
     } catch (error) {
       return error.message
     }
