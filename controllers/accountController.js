@@ -126,8 +126,8 @@ async function buildRegister(req, res, next) {
   
     } else {
       req.flash("notice", "Sorry, the process failed.")
-      res.status(501).render("./account/edit-review", {
-        title: "Update Account",
+      res.status(501).render("./account/delete-review", {
+        title: "Delete Account",
         isLoggedIn: res.locals.loggedin,
         nav,
         review_date: review_data.review_date,
